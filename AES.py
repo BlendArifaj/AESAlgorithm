@@ -3,7 +3,7 @@ import sys
 import math
 
 class AES(object):
-    #Mundesit e qelesit
+    #Mundesite e celesit
     keySize = dict(SIZE_128=16, SIZE_192=24, SIZE_256=32)
 
     # Rijndael S-box
@@ -96,7 +96,7 @@ class AES(object):
             0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74,
             0xe8, 0xcb ]
 
-    #Me mor vleren ne RCOn
+    #Me e marre vleren ne RCOn
     def getRconValue(self, num):
         return self.Rcon[num]
 

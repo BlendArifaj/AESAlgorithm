@@ -103,6 +103,8 @@ class AES(object):
     def core(self, word, iteration):
     # rotate the 32-bit word 8 bits to the left
     word = self.rotate(word)
+    # apply S-Box substitution on all 4 parts of the 32-bit word
+    for i in range(4):
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):
@@ -171,14 +173,13 @@ class AES(object):
         else: getter = self.getSBoxValue
         for i in range(16): state[i] = getter(state[i])
         return state
-    
-    # Metoda shiftrow per ndrrimin e vendeve te anetareve ne kolonen 2 , 3 dhe 
+
     def shiftRows(self, state, isInv):
         for i in range(4):
             state = self.shiftRow(state, i*4, i, isInv)
         return state
 
-    # cdo iteracion ben shift nje anetare te kolones
+    # each iteration shifts the row to the left by 1
     def shiftRow(self, state, statePointer, nbr, isInv):
         for i in range(nbr):
             if isInv:
@@ -191,7 +192,7 @@ class AES(object):
                         state[statePointer:statePointer+1]
         return state
 
-    # Shumzimi me matricen 4x4
+    # galois multiplication of the 4x4 matrix
     def mixColumns(self, state, isInv):
         # iterate over the 4 columns
         for i in range(4):
@@ -204,7 +205,7 @@ class AES(object):
 
         return state
 
-    # Shumzimi i nje kolone me matricen 4x4
+    # galois multiplication of 1 column of the 4x4 matrix
     def mixColumn(self, column, isInv):
         if isInv: mult = [14, 9, 13, 11]
         else: mult = [2, 1, 1, 3]

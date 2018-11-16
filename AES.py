@@ -171,13 +171,14 @@ class AES(object):
         else: getter = self.getSBoxValue
         for i in range(16): state[i] = getter(state[i])
         return state
-
+    
+    # Metoda shiftrow per ndrrimin e vendeve te anetareve ne kolonen 2 , 3 dhe 
     def shiftRows(self, state, isInv):
         for i in range(4):
             state = self.shiftRow(state, i*4, i, isInv)
         return state
 
-    # each iteration shifts the row to the left by 1
+    # cdo iteracion ben shift nje anetare te kolones
     def shiftRow(self, state, statePointer, nbr, isInv):
         for i in range(nbr):
             if isInv:
@@ -190,7 +191,7 @@ class AES(object):
                         state[statePointer:statePointer+1]
         return state
 
-    # galois multiplication of the 4x4 matrix
+    # Shumzimi me matricen 4x4
     def mixColumns(self, state, isInv):
         # iterate over the 4 columns
         for i in range(4):
@@ -203,7 +204,7 @@ class AES(object):
 
         return state
 
-    # galois multiplication of 1 column of the 4x4 matrix
+    # Shumzimi i nje kolone me matricen 4x4
     def mixColumn(self, column, isInv):
         if isInv: mult = [14, 9, 13, 11]
         else: mult = [2, 1, 1, 3]

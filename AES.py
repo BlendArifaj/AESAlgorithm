@@ -102,7 +102,7 @@ class AES(object):
 
     def core(self, word, iteration):
     # rotate the 32-bit word 8 bits to the left
- 
+    word = self.rotate(word)
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):

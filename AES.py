@@ -107,7 +107,7 @@ class AES(object):
     for i in range(4):
         word[i] = self.getSBoxValue(word[i])
         # XOR the output of the rcon operation with i to the first part
-    
+        # (leftmost) only
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):
         

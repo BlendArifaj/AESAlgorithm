@@ -101,6 +101,7 @@ class AES(object):
         return self.Rcon[num]
 
     def core(self, word, iteration):
+    # rotate the 32-bit word 8 bits to the left
  
     
     #Faza exandKEY

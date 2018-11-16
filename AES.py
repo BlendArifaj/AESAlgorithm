@@ -105,6 +105,7 @@ class AES(object):
     word = self.rotate(word)
     # apply S-Box substitution on all 4 parts of the 32-bit word
     for i in range(4):
+        word[i] = self.getSBoxValue(word[i])
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):

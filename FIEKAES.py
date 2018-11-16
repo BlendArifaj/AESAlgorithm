@@ -29,7 +29,11 @@ class FIEKAES():
         return base64.b64encode(iv + cipher.encrypt(teksti))
     
     #Fjolla
-
+    def dekripto(self, tekstiEnkriptuar):
+        tekstiEnkriptuar = base64.b64decode(tekstiEnkriptuar)
+        iv = tekstiEnkriptuar[:AES.block_size]
+        cipher = AES.new(self.celesi, AES.MODE_CBC, iv)
+        return self._unpad(cipher.decrypt(tekstiEnkriptuar[AES.block_size:])).decode('utf-8')
 
     def _pad(self, s):
         return s + (self.bs - len(s) % self.bs) * chr(self.bs - len(s) % self.bs)

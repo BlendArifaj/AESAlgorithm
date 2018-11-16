@@ -6,12 +6,12 @@ class FIEKAES():
     #Blendi
     def __init__(self): 
         self.bs = 16
-        self.qelesi = self.qelesi()
+        self.celesi = self.celesi()
         
-    def qelesi(self):
+    def celesi(self):
         import random
         qelesi  = ''.join(chr(random.randint(0,0xFF)) for i in range(16))
-        return hashlib.sha256(qelesi.encode()).digest()
+        return hashlib.sha256(celesi.encode()).digest()
     
     def vektoriInicializues(self):
         return Random.new().read(AES.block_size)
@@ -25,14 +25,14 @@ class FIEKAES():
     def enkripto(self, teksti):
         teksti = self._pad(teksti)
         iv = self.vektoriInicializues()
-        cipher = AES.new(self.qelesi, AES.MODE_CBC, iv)
+        cipher = AES.new(self.celesi, AES.MODE_CBC, iv)
         return base64.b64encode(iv + cipher.encrypt(teksti))
     
     #Fjolla
     def dekripto(self, tekstiEnkriptuar):
         tekstiEnkriptuar = base64.b64decode(tekstiEnkriptuar)
         iv = tekstiEnkriptuar[:AES.block_size]
-        cipher = AES.new(self.qelesi, AES.MODE_CBC, iv)
+        cipher = AES.new(self.celesi, AES.MODE_CBC, iv)
         return self._unpad(cipher.decrypt(tekstiEnkriptuar[AES.block_size:])).decode('utf-8')
 
     def _pad(self, s):

@@ -106,6 +106,7 @@ class AES(object):
     # apply S-Box substitution on all 4 parts of the 32-bit word
     for i in range(4):
         word[i] = self.getSBoxValue(word[i])
+        # XOR the output of the rcon operation with i to the first part
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):

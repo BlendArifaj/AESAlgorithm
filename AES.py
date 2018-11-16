@@ -100,16 +100,7 @@ class AES(object):
     def getRconValue(self, num):
         return self.Rcon[num]
 
-    def core(self, word, iteration):
-        # rotate the 32-bit word 8 bits to the left
-        word = self.rotate(word)
-        # apply S-Box substitution on all 4 parts of the 32-bit word
-        for i in range(4):
-            word[i] = self.getSBoxValue(word[i])
-        # XOR the output of the rcon operation with i to the first part
-        # (leftmost) only
-        word[0] = word[0] ^ self.getRconValue(iteration)
-        return word
+
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):

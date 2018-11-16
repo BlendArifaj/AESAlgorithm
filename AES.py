@@ -100,7 +100,8 @@ class AES(object):
     def getRconValue(self, num):
         return self.Rcon[num]
 
-
+    def core(self, word, iteration):
+ 
     
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):

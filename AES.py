@@ -315,5 +315,29 @@ class AES(object):
             for l in range(4):
                 output[(k*4)+l] = block[(k+(l*4))]
         return output
+    
+     # procesi i dekriptimit
+    def decrypt(self, iput, key, size):
+        output = [0] * 16
+        nbrRounds = 0
+        block = [0] * 16
+        if size == self.keySize["SIZE_128"]: nbrRounds = 10
+        elif size == self.keySize["SIZE_192"]: nbrRounds = 12
+        elif size == self.keySize["SIZE_256"]: nbrRounds = 14
+        else: return None
+
+        expandedKeySize = 16*(nbrRounds+1)
+
+        for i in range(4):
+            
+            for j in range(4):
+                block[(i+(j*4))] = iput[(i*4)+j]
+        expandedKey = self.expandKey(key, size, expandedKeySize)
+        block = self.aes_invMain(block, expandedKey, nbrRounds)
+        for k in range(4):
+            for l in range(4):
+                output[(k*4)+l] = block[(k+(l*4))]
+        return output
+
 
    

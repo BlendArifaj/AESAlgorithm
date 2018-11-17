@@ -228,6 +228,7 @@ class AES(object):
         return column
 
     # applies the 4 operations of the forward round in sequence
+    # aplikon 4 operacione ne roundin e ardhshem ne sekuence
     def aes_round(self, state, roundKey):
         state = self.subBytes(state, False)
         state = self.shiftRows(state, False)
@@ -236,6 +237,7 @@ class AES(object):
         return state
 
     # applies the 4 operations of the inverse round in sequence
+    # aplikon 4 operacione per roundin invers ne sekuence
     def aes_invRound(self, state, roundKey):
         state = self.shiftRows(state, True)
         state = self.subBytes(state, True)
@@ -245,6 +247,8 @@ class AES(object):
 
     # Perform the initial operations, the standard round, and the final
     # operations of the forward aes, creating a round key for each round
+    # Performon operacionet fillestare , roundin standart , dhe operacionin final
+    # per aes , krijimin e celesit per cdo round
     def aes_main(self, state, expandedKey, nbrRounds):
         state = self.addRoundKey(state, self.createRoundKey(expandedKey, 0))
         i = 1

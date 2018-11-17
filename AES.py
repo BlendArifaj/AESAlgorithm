@@ -102,12 +102,15 @@ class AES(object):
 
     def core(self, word, iteration):
     # rotate the 32-bit word 8 bits to the left
+    # rrotullon fjalen 32 biteshe me 8 bita ne te majte
     word = self.rotate(word)
     # apply S-Box substitution on all 4 parts of the 32-bit word
+    # aplikon S-Box zevendesimin ne 4 pjeset e fjales 32biteshe
     for i in range(4):
         word[i] = self.getSBoxValue(word[i])
         # XOR the output of the rcon operation with i to the first part
         # (leftmost) only
+        # Ben XOR outputin e operacionit rcon me anetaret me index i te pjeses se pare
         word[0] = word[0] ^ self.getRconValue(iteration)
         return word
         
@@ -119,12 +122,13 @@ class AES(object):
         expandedKey = [0] * expandedKeySize
 
         # set the 16, 24, 32 bytes of the expanded key to the input key
+        # vendos 16,24,32 bajtat per celesin e zgjeruar ne celesin hyres
         for j in range(size):
             expandedKey[j] = key[j]
         currentSize += size
 
         while currentSize < expandedKeySize:
-            # assign the previous 4 bytes to the temporary value t
+            # assign the previous 4 bytes to the temporary value 
             t = expandedKey[currentSize-4:currentSize]
 
             # every 16,24,32 bytes we apply the core schedule to t

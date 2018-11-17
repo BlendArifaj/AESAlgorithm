@@ -273,20 +273,20 @@ class AES(object):
         state = self.addRoundKey(state, self.createRoundKey(expandedKey, 0))
         return state
 
-    # encrypts a 128 bit input block against the given key of size specified
+    # enkriptimi bllokut 128 bitesh per celesin e dhene specifik
     def encrypt(self, iput, key, size):
         output = [0] * 16
-        # the number of rounds
+        # numri i roundeve
         nbrRounds = 0
-        # the 128 bit block to encode
+        # enkodimi 128 bitesh i bllokut
         block = [0] * 16
-        # set the number of rounds
+        # numri i roundeve
         if size == self.keySize["SIZE_128"]: nbrRounds = 10
         elif size == self.keySize["SIZE_192"]: nbrRounds = 12
         elif size == self.keySize["SIZE_256"]: nbrRounds = 14
         else: return None
 
-        # the expanded keySize
+        # gjatesia celesit te zgjeruar
         expandedKeySize = 16*(nbrRounds+1)
 
         # Set the block values, for the block:
@@ -302,38 +302,18 @@ class AES(object):
             for j in range(4):
                 block[(i+(j*4))] = iput[(i*4)+j]
 
-        # expand the key into an 176, 208, 240 bytes key
-        # the expanded key
+        # zgjerimi i qelesit ne 176 , 208 , 250 bajta
+        # celesi i zgjeruar
         expandedKey = self.expandKey(key, size, expandedKeySize)
 
-        # encrypt the block using the expandedKey
+        # enkriptimi i bllokut duke perdorur celesin e zgjeruar
         block = self.aes_main(block, expandedKey, nbrRounds)
 
         # unmap the block again into the output
         for k in range(4):
-            # iterate over the rows
+            # iteracion rreth rreshtave
             for l in range(4):
                 output[(k*4)+l] = block[(k+(l*4))]
         return output
 
-    def decrypt(self, iput, key, size):
-        output = [0] * 16
-        nbrRounds = 0
-        block = [0] * 16
-        if size == self.keySize["SIZE_128"]: nbrRounds = 10
-        elif size == self.keySize["SIZE_192"]: nbrRounds = 12
-        elif size == self.keySize["SIZE_256"]: nbrRounds = 14
-        else: return None
-
-        expandedKeySize = 16*(nbrRounds+1)
-
-        for i in range(4):
-            
-            for j in range(4):
-                block[(i+(j*4))] = iput[(i*4)+j]
-        expandedKey = self.expandKey(key, size, expandedKeySize)
-        block = self.aes_invMain(block, expandedKey, nbrRounds)
-        for k in range(4):
-            for l in range(4):
-                output[(k*4)+l] = block[(k+(l*4))]
-        return output
+   

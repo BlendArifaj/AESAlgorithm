@@ -15,6 +15,7 @@ class FIEKAES():
         return hashlib.sha256(celesi.encode()).digest()
     
     def vektoriInicializues(self):
+        #iv generation (needed for cbc mode implementation)
         return Random.new().read(AES.block_size)
     
     def kontrollo(self, text, tekstiDekriptuar):

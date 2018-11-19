@@ -5,6 +5,7 @@ class FIEKAES():
     from Crypto.Cipher import AES
     #Blendi
     def __init__(self): 
+        #block size (16/32)
         self.bs = 16
         self.celesi = self.celesi()
         
@@ -41,4 +42,6 @@ class FIEKAES():
     @staticmethod
     def _unpad(s):
         return s[:-ord(s[len(s)-1:])]
+    
+    
     

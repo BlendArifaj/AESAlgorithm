@@ -268,7 +268,9 @@ class AES(object):
                                  self.createRoundKey(expandedKey, 16*nbrRounds))
         return state
 # Perform the initial operations, the standard round, and the final
+# Performon operacionet fillestare , roundin standart dhe ate final
     # operations of the inverse aes, creating a round key for each round
+    # operacionet per inversin e AES , krijimi i qelesit per cdo round
     def aes_invMain(self, state, expandedKey, nbrRounds):
         state = self.addRoundKey(state,
                                  self.createRoundKey(expandedKey, 16*nbrRounds))

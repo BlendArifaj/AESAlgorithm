@@ -96,24 +96,7 @@ class AES(object):
             0x9f, 0x25, 0x4a, 0x94, 0x33, 0x66, 0xcc, 0x83, 0x1d, 0x3a, 0x74,
             0xe8, 0xcb ]
 
-    #Me e marre vleren ne RCOn
-    def getRconValue(self, num):
-        return self.Rcon[num]
-
-    def core(self, word, iteration):
-    # rotate the 32-bit word 8 bits to the left
-    # rrotullon fjalen 32 biteshe me 8 bita ne te majte
-    word = self.rotate(word)
-    # apply S-Box substitution on all 4 parts of the 32-bit word
-    # aplikon S-Box zevendesimin ne 4 pjeset e fjales 32biteshe
-    for i in range(4):
-        word[i] = self.getSBoxValue(word[i])
-        # XOR the output of the rcon operation with i to the first part
-        # (leftmost) only
-        # Ben XOR outputin e operacionit rcon me anetaret me index i te pjeses se pare
-        word[0] = word[0] ^ self.getRconValue(iteration)
-        return word
-        
+    
     #Faza exandKEY
     def expandKey(self, key, size, expandedKeySize):
         

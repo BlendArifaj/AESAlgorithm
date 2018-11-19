@@ -279,9 +279,13 @@ class AES(object):
             state = self.aes_invRound(state,
                                       self.createRoundKey(expandedKey, 16*i))
             i -= 1
+            
         state = self.shiftRows(state, True)
+        
         state = self.subBytes(state, True)
+        
         state = self.addRoundKey(state, self.createRoundKey(expandedKey, 0))
+        
         return state
 
     # enkriptimi bllokut 128 bitesh per celesin e dhene specifik

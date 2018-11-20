@@ -331,6 +331,51 @@ class AES(object):
                 output[(k*4)+l] = block[(k+(l*4))]
         return output
     
+    
+    def encrypt(self, iput, key, size):
+        output = [0] * 16
+        # numri i roundeve
+        nbrRounds = 0
+        # enkodimi 128 bitesh i bllokut
+        block = [0] * 16
+        # numri i roundeve
+        if size == self.keySize["SIZE_128"]: nbrRounds = 10
+        elif size == self.keySize["SIZE_192"]: nbrRounds = 12
+        elif size == self.keySize["SIZE_256"]: nbrRounds = 14
+        else: return None
+
+        # gjatesia celesit te zgjeruar
+        expandedKeySize = 16*(nbrRounds+1)
+
+        # Set the block values, for the block:
+        # a0,0 a0,1 a0,2 a0,3
+        # a1,0 a1,1 a1,2 a1,3
+        # a2,0 a2,1 a2,2 a2,3
+        # a3,0 a3,1 a3,2 a3,3
+        # the mapping order is a0,0 a1,0 a2,0 a3,0 a0,1 a1,1 ... a2,3 a3,3
+        #
+        # iterate over the columns
+        for i in range(4):
+            # iterate over the rows
+            for j in range(4):
+                block[(i+(j*4))] = iput[(i*4)+j]
+
+        # zgjerimi i qelesit ne 176 , 208 , 250 bajta
+        # celesi i zgjeruar
+        expandedKey = self.expandKey(key, size, expandedKeySize)
+
+        # enkriptimi i bllokut duke perdorur celesin e zgjeruar
+        block = self.aes_main(block, expandedKey, nbrRounds)
+
+        # unmap the block again into the output
+        for k in range(4):
+            # iteracion rreth rreshtave
+            for l in range(4):
+                output[(k*4)+l] = block[(k+(l*4))]
+        return output
+    
+    
+    
      # procesi i dekriptimit
     def decrypt(self, iput, key, size):
         output = [0] * 16

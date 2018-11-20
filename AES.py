@@ -288,6 +288,66 @@ class AES(object):
         
         return state
 
+    
+
+    # applies the 4 operations of the forward round in sequence
+    # aplikon 4 operacione ne roundin e ardhshem ne sekuence
+    def aes_round(self, state, roundKey):
+        state = self.subBytes(state, False)
+        state = self.shiftRows(state, False)
+        state = self.mixColumns(state, False)
+        state = self.addRoundKey(state, roundKey)
+        return state
+
+    # applies the 4 operations of the inverse round in sequence
+    # aplikon 4 operacione per roundin invers ne sekuence
+    def aes_invRound(self, state, roundKey):
+        state = self.shiftRows(state, True)
+        state = self.subBytes(state, True)
+        state = self.addRoundKey(state, roundKey)
+        state = self.mixColumns(state, True)
+        return state
+
+    # Perform the initial operations, the standard round, and the final
+    # operations of the forward aes, creating a round key for each round
+    # Performon operacionet fillestare , roundin standart , dhe operacionin final
+    # per aes , krijimin e celesit per cdo round
+    def aes_main(self, state, expandedKey, nbrRounds):
+        state = self.addRoundKey(state, self.createRoundKey(expandedKey, 0))
+        i = 1
+        while i < nbrRounds:
+            state = self.aes_round(state,
+                                   self.createRoundKey(expandedKey, 16*i))
+            i += 1
+        state = self.subBytes(state, False)
+        state = self.shiftRows(state, False)
+        state = self.addRoundKey(state,
+                                 self.createRoundKey(expandedKey, 16*nbrRounds))
+        return state
+# Perform the initial operations, the standard round, and the final
+# Performon operacionet fillestare , roundin standart dhe ate final
+    # operations of the inverse aes, creating a round key for each round
+    # operacionet per inversin e AES , krijimi i qelesit per cdo round
+    def aes_invMain(self, state, expandedKey, nbrRounds):
+        state = self.addRoundKey(state,
+                                 self.createRoundKey(expandedKey, 16*nbrRounds))
+        i = nbrRounds - 1
+        while i > 0:
+            state = self.aes_invRound(state,
+                                      self.createRoundKey(expandedKey, 16*i))
+            i -= 1
+            
+        state = self.shiftRows(state, True)
+        
+        state = self.subBytes(state, True)
+        
+        state = self.addRoundKey(state, self.createRoundKey(expandedKey, 0))
+        
+        return state
+
+    
+    
+    
     # enkriptimi bllokut 128 bitesh per celesin e dhene specifik
     def encrypt(self, iput, key, size):
         output = [0] * 16
